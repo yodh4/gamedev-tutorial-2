@@ -1,18 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdoksexcakmop"]
+[gd_scene load_steps=12 format=3 uid="uid://cdoksexcakmop"]
 
 [ext_resource type="PackedScene" uid="uid://y5a4e3ajuy2r" path="res://scenes/StonePlatform.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://bim6vlv226o0s" path="res://assets/wp8164675.png" id="1_sm80o"]
 [ext_resource type="PackedScene" uid="uid://datfp8kxjrjg" path="res://scenes/BlueShip.tscn" id="2"]
-[ext_resource type="Script" path="res://scenes/PlatformBlue.gd" id="3"]
 [ext_resource type="Script" path="res://scenes/ObjectiveArea.gd" id="4"]
+[ext_resource type="Script" path="res://scenes/PlatformWhite.gd" id="4_886yn"]
+[ext_resource type="Texture2D" uid="uid://dcwu8ypraifim" path="res://assets/icon.png" id="5_4rv1o"]
+[ext_resource type="PackedScene" uid="uid://dbrc8d7c5pxom" path="res://scenes/SnowyPlatform.tscn" id="5_8brvh"]
+[ext_resource type="PackedScene" uid="uid://cw6cbgw7l22qq" path="res://scenes/GreenShip.tscn" id="6_1yads"]
+[ext_resource type="PackedScene" uid="uid://bb7i8mrcgqlob" path="res://scenes/Meteor.tscn" id="7_kq47o"]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(138.75, 79)
+size = Vector2(94.6875, 79)
+
+[sub_resource type="GDScript" id="GDScript_spw7r"]
+script/source = "extends AnimatableBody2D
+
+func _on_body_entered(body):
+	if (body.name == \"GreenShip\"):
+		print(\"You hit a meteor\")
+"
 
 [node name="MainLevel" type="Node"]
 
+[node name="Node" type="Node" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Node"]
+offset_right = 1152.0
+offset_bottom = 646.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node"]
+
+[node name="Wp8164675" type="Sprite2D" parent="Node"]
+position = Vector2(616, 296)
+scale = Vector2(0.524177, 0.44612)
+texture = ExtResource("1_sm80o")
+
 [node name="PlatformBlue" type="Node2D" parent="."]
-position = Vector2(35, 565)
-script = ExtResource("3")
+position = Vector2(35.705, 565)
 
 [node name="StonePlatform" parent="PlatformBlue" instance=ExtResource("1")]
 
@@ -20,14 +46,76 @@ script = ExtResource("3")
 position = Vector2(70, 0)
 
 [node name="BlueShip" parent="." instance=ExtResource("2")]
-position = Vector2(72.7009, 421.901)
+position = Vector2(51, 490)
 lock_rotation = true
 
 [node name="ObjectiveArea" type="Area2D" parent="."]
+position = Vector2(0, 35)
 script = ExtResource("4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectiveArea"]
-position = Vector2(70.625, 40)
+position = Vector2(480, 53)
 shape = SubResource("1")
 
+[node name="Sprite2D" type="Sprite2D" parent="ObjectiveArea/CollisionShape2D"]
+texture = ExtResource("5_4rv1o")
+
+[node name="ObjectiveArea2" type="Area2D" parent="."]
+position = Vector2(570, 5)
+script = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectiveArea2"]
+position = Vector2(414, 67)
+shape = SubResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="ObjectiveArea2/CollisionShape2D"]
+texture = ExtResource("5_4rv1o")
+
+[node name="PlatformWhite" type="Node2D" parent="."]
+script = ExtResource("4_886yn")
+
+[node name="StonePlatform4" parent="PlatformWhite" instance=ExtResource("1")]
+position = Vector2(251, 500)
+
+[node name="SnowyPlatform" parent="PlatformWhite" instance=ExtResource("5_8brvh")]
+position = Vector2(310, 570)
+
+[node name="SnowyPlatform2" parent="PlatformWhite" instance=ExtResource("5_8brvh")]
+position = Vector2(379, 570)
+
+[node name="StonePlatform3" parent="PlatformWhite" instance=ExtResource("1")]
+position = Vector2(437, 500)
+
+[node name="GreenShip" parent="." instance=ExtResource("6_1yads")]
+position = Vector2(340, 493)
+
+[node name="Meteor" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(200, 317)
+script = SubResource("GDScript_spw7r")
+
+[node name="Meteor2" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(601, 233)
+
+[node name="Meteor3" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(303, 177)
+
+[node name="Meteor4" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(772, 329)
+
+[node name="Meteor5" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(606, 496)
+
+[node name="Meteor6" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(1005, 215)
+
+[node name="Meteor7" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(464, 348)
+
+[node name="Meteor8" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(805, 165)
+
+[node name="Meteor9" parent="." instance=ExtResource("7_kq47o")]
+position = Vector2(930, 449)
+
 [connection signal="body_entered" from="ObjectiveArea" to="ObjectiveArea" method="_on_ObjectiveArea_body_entered"]
+[connection signal="body_entered" from="ObjectiveArea2" to="ObjectiveArea2" method="_on_ObjectiveArea_body_entered"]
